@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: set-curr <ticket>"
+    exit 1
+fi
+
+TICKET=$1
+TICKET_DIR="$HOME/todo/pr/${TICKET}"
+echo "Setting current ticket as PR-$TICKET."
+
+set -o xtrace
+
+cd $HOME
+rm -f curr
+mkdir -p $TICKET_DIR
+ln -s $TICKET_DIR curr
+if [ ! -h curr ]; then
+    echo 'Failed.'
+    exit 1
+fi
+echo 'Success.'
+
